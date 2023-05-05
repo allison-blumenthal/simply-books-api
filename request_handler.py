@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from views import get_all_authors, get_single_author, get_all_books, get_single_book
+from views import get_all_authors, get_single_author, get_all_books, get_single_book, create_author, create_book
 import json
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -86,13 +86,26 @@ class HandleRequests(BaseHTTPRequestHandler):
     def do_POST(self):
         """Handles POST requests to the server
         """
-        # Set response code to 'Created'
         self._set_headers(201)
-
         content_len = int(self.headers.get('content-length', 0))
         post_body = self.rfile.read(content_len)
-        response = f"received post request:<br>{post_body}"
-        self.wfile.write(response.encode())
+      
+        post_body = json.loads(post_body)
+        
+        (resource, id) = self.parse_url(self.path)
+        
+        new_author = None
+        new_book = None
+        
+        if resource == "authors":
+          new_author = create_author(post_body)
+          
+          self.wfile.write(json.dumps(new_author).encode())
+          
+        if resource == "books":
+          new_book = create_book(post_body)
+          
+          self.wfile.write(json.dumps(new_book).encode())
 
     # Here's a method on the class that overrides the parent's method.
     # It handles any PUT request.

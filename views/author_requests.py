@@ -36,3 +36,19 @@ def get_single_author(id):
       requested_author = author
   
   return requested_author
+
+def create_author(author):
+  #get the id value of the last author in the list
+  max_id = AUTHORS[-1]["id"]
+  
+  # add 1 to whatever that number was
+  new_id = max_id + 1
+  
+  # add an `id` property to the author dictionary
+  author["id"] = new_id
+
+  # add the author dictionary to the list
+  AUTHORS.append(author)
+
+  # return the dictionary with `id` property added
+  return author 
