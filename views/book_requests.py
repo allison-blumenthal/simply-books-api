@@ -36,3 +36,14 @@ def get_single_book(id):
       requested_book = book
   
   return requested_book
+
+def create_book(book):
+  max_id = BOOKS[-1]["id"]
+  
+  new_id = max_id + 1
+  
+  book["id"] = new_id
+  
+  BOOKS.append(book)
+  
+  return book
