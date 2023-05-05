@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from views import get_all_authors, get_single_author, get_all_books, get_single_book, create_author, create_book, delete_author, delete_book
+from views import get_all_authors, get_single_author, get_all_books, get_single_book, create_author, create_book, delete_author, delete_book, update_author, update_book
 import json
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -113,7 +113,27 @@ class HandleRequests(BaseHTTPRequestHandler):
     def do_PUT(self):
         """Handles PUT requests to the server
         """
-        self.do_POST()
+        self._set_headers(204)
+        content_len = int(self.headers.get('content-length', 0))
+        post_body = self.rfile.read(content_len)
+        post_body = json.loads(post_body)
+        
+        # parse the url
+        (resource, id) = self.parse_url(self.path)
+        
+        #update a single author from the list
+        if resource == "authors":
+          update_author(id, post_body)
+          
+        #encode the new author and send in response
+        self.wfile.write("".encode())
+        
+        if resource == "books":
+          update_book(id, post_body)
+          
+          self.wfile.write("".encode())
+        
+       
         
     def do_DELETE(self):
       # set a 204 response code

@@ -57,3 +57,9 @@ def delete_book(id):
   
   if book_index >= 0:
     BOOKS.pop(book_index)
+
+def update_book(id, new_book):
+  for index, book in enumerate(BOOKS):
+    if book["id"] == id:
+      BOOKS[index] = new_book
+      break
