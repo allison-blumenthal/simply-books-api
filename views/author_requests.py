@@ -52,3 +52,19 @@ def create_author(author):
 
   # return the dictionary with `id` property added
   return author 
+
+def delete_author(id):
+  # initial -1 value for author index, in case one isn't found
+  author_index = -1
+  
+  # iterate the AUTHORS list, but use enumerate() so that you
+  # can access the index calue of each item
+  for index, author in enumerate(AUTHORS):
+    if author["id"] == id:
+      # found the author. store the current index.
+      author_index = index
+  
+  # if the author was found, use pop(int) to remove it from the list
+  if author_index >= 0:
+    AUTHORS.pop(author_index)
+  

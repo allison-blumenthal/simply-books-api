@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from views import get_all_authors, get_single_author, get_all_books, get_single_book, create_author, create_book
+from views import get_all_authors, get_single_author, get_all_books, get_single_book, create_author, create_book, delete_author, delete_book
 import json
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -114,6 +114,25 @@ class HandleRequests(BaseHTTPRequestHandler):
         """Handles PUT requests to the server
         """
         self.do_POST()
+        
+    def do_DELETE(self):
+      # set a 204 response code
+      self._set_headers(204)
+      
+      # prase the url
+      (resource, id) = self.parse_url(self.path)
+      
+      # delete a single author from the list
+      if resource == "authors":
+        delete_author(id)
+        
+      # encode the new author and send in response
+      self.wfile.write("".encode())
+      
+      if resource == "books":
+        delete_book(id)
+        
+      self.wfile.write("".encode())
 
 
 # This function is not inside the class. It is the starting
