@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from views import get_all_authors, get_single_author
+from views import get_all_authors, get_single_author, get_all_books, get_single_book
 import json
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -70,6 +70,15 @@ class HandleRequests(BaseHTTPRequestHandler):
           else:
             response = get_all_authors()
 
+        self.wfile.write(json.dumps(response).encode())
+        
+        if resource == "books":
+          if id is not None:
+            response = get_single_book(id)
+            
+          else:
+            response = get_all_books()
+            
         self.wfile.write(json.dumps(response).encode())
 
     # Here's a method on the class that overrides the parent's method.
