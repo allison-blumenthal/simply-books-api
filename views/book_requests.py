@@ -47,3 +47,13 @@ def create_book(book):
   BOOKS.append(book)
   
   return book
+
+def delete_book(id):
+  book_index = -1
+  
+  for index, book in enumerate(BOOKS):
+    if book["id"] == id:
+      book_index = index
+  
+  if book_index >= 0:
+    BOOKS.pop(book_index)
