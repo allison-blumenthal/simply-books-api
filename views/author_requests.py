@@ -25,6 +25,14 @@ AUTHORS = [
     }
 ]
 
-
 def get_all_authors():
     return AUTHORS
+  
+def get_single_author(id):
+  requested_author = None
+  
+  for author in AUTHORS:
+    if author["id"] == id:
+      requested_author = author
+  
+  return requested_author
